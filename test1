@@ -1,0 +1,29 @@
+import re
+
+f = open(r".\input.txt", "r", encoding="utf-8")
+data = f.readlines()
+data = [s.replace('\n', '') for s in data]
+nums = []
+strings = []
+for i in data:
+    num = re.sub("\\D", "", i)
+    nums.append(num)
+    r = num + ":"
+    strings.append(i.replace(r, ""))
+strings.pop(-1)
+
+
+nums = list(map(int, nums))
+dic = {key: val for key, val in zip(strings, nums)}
+dic = sorted(dic.items(), key=lambda x:x[1])
+res = ""
+for i in dic:
+    v = int(i[1])
+    
+    if nums[-1]%v==0:
+        res += i[0]
+        
+if res == "":
+    res = nums[-1]
+
+print(res)
